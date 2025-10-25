@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LasLlavesDeTuCasaApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(LasLlavesDeTuCasaApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(LasLlavesDeTuCasaApplication.class, args);
+  }
 
-    @GetMapping("/")
-    public String index() {
-        return "<h1>Hello World!</h1>";
-    }
+  @GetMapping("/")
+  public String index() {
+    return "<h1>Hello World!</h1>";
+  }
 }
