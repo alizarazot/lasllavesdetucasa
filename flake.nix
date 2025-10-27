@@ -13,6 +13,8 @@
       pkgs.mkShell {
         packages = [
           pkgs.jdk
+          pkgs.bun
+          pkgs.nodejs_22
         ];
       };
   };
