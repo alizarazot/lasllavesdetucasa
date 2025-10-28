@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-page-login',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './page-login.html',
-  styleUrl: './page-login.css',
 })
 export class PageLogin {}
