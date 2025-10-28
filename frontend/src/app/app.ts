@@ -9,5 +9,6 @@ import { CardRealState } from './card-real-state/card-real-state';
   templateUrl: './app.html',
 })
 export class App {
+  numItems = [...Array(1024).keys()];
   protected readonly title = signal('frontend');
 }
