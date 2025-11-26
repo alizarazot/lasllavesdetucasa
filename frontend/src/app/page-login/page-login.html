@@ -1,19 +1,42 @@
-<div class="h-dvh grid place-items-center bg-dark-grey-blue">
-  <main class="flex flex-col p-4 bg-green-white">
-    <header class="border-b-2 mb-4">
-      <img class="max-w-48 mb-6 m-auto" src="/full-logo.jpeg" />
-    </header>
-    <form class="flex flex-col mb-4">
-      <label>Email</label>
-      <input class="outline-2 mb-2 px-1" />
+<div class="min-h-screen flex flex-col items-center justify-center bg-green-white px-4">
+  <!-- Logo -->
+  <div class="mb-16">
+    <img src="/full-logo.jpeg" alt="Las llaves de tu casa" class="w-full max-w-md mix-blend-multiply" />
+  </div>
 
-      <label>Password</label>
-      <input type="password" class="outline-2 mb-6 px-1" />
+  <!-- Email Input Section -->
+  <div class="w-full max-w-md mb-8">
+    <label class="block text-black font-serif text-lg mb-3">Introduce your email</label>
+    <div class="flex gap-3">
+      <input type="email"
+        class="flex-1 bg-sandy-brown text-black placeholder-black/50 font-serif px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-dark-grey-blue"
+        placeholder="your@email.com" />
+      <button
+        class="bg-sandy-brown text-black font-serif px-6 py-3 rounded-lg hover:bg-opacity-90 transition-colors whitespace-nowrap">
+        Start journey!
+      </button>
+    </div>
+  </div>
 
-      <a routerLink="/home" class="m-auto p-1 px-2 bg-sandy-brown">Log In</a>
-    </form>
-    <footer class="text-center">
-      <span>Create account</span>
-    </footer>
-  </main>
+  <!-- Google Sign In -->
+  <div class="flex items-center gap-3">
+    <span class="text-black font-serif">Our use:</span>
+    <button class="flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+      <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"
+          fill="#4285F4" />
+        <path
+          d="M9.003 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9.003 18z"
+          fill="#34A853" />
+        <path
+          d="M3.964 10.712c-.18-.54-.282-1.117-.282-1.71 0-.593.102-1.17.282-1.71V4.96H.957C.347 6.175 0 7.55 0 9.002c0 1.452.348 2.827.957 4.042l3.007-2.332z"
+          fill="#FBBC05" />
+        <path
+          d="M9.003 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.464.891 11.426 0 9.003 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29c.708-2.127 2.692-3.71 5.036-3.71z"
+          fill="#EA4335" />
+      </svg>
+      <span class="text-gray-700 font-medium">Google</span>
+    </button>
+  </div>
 </div>
