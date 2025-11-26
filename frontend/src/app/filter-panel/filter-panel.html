@@ -1,0 +1,71 @@
+<div class="relative">
+    <!-- Filter Button (Icon Only) -->
+    <button (click)="togglePanel()"
+        class="flex items-center justify-center bg-sandy-brown text-black p-2 rounded-lg hover:bg-opacity-90 transition-colors">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round">
+            <line x1="4" y1="6" x2="20" y2="6" />
+            <line x1="4" y1="12" x2="16" y2="12" />
+            <line x1="4" y1="18" x2="12" y2="18" />
+        </svg>
+    </button>
+
+    <!-- Filter Panel Dropdown -->
+    <div *ngIf="isOpen" class="absolute top-full left-0 mt-2 bg-white rounded-lg shadow-xl z-50 p-4"
+        style="width: 280px; max-width: 280px;">
+
+        <h3 class="text-sm font-serif mb-3 text-black">Filters</h3>
+
+        <!-- Price Range -->
+        <div class="mb-3">
+            <label class="block text-xs font-serif text-black mb-1">Price</label>
+            <div class="flex gap-1.5">
+                <input type="number" [(ngModel)]="filters.minPrice" placeholder="Min"
+                    class="flex-1 px-2 py-1 text-xs border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-dark-grey-blue text-black bg-white"
+                    style="min-width: 0;" />
+                <input type="number" [(ngModel)]="filters.maxPrice" placeholder="Max"
+                    class="flex-1 px-2 py-1 text-xs border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-dark-grey-blue text-black bg-white"
+                    style="min-width: 0;" />
+            </div>
+        </div>
+
+        <!-- Bedrooms -->
+        <div class="mb-3">
+            <label class="block text-xs font-serif text-black mb-1">Min Bedrooms</label>
+            <input type="number" [(ngModel)]="filters.bedrooms" min="0" placeholder="Bedrooms"
+                class="w-full px-2 py-1 text-xs border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-dark-grey-blue text-black bg-white" />
+        </div>
+
+        <!-- Bathrooms -->
+        <div class="mb-3">
+            <label class="block text-xs font-serif text-black mb-1">Min Bathrooms</label>
+            <input type="number" [(ngModel)]="filters.bathrooms" min="0" placeholder="Bathrooms"
+                class="w-full px-2 py-1 text-xs border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-dark-grey-blue text-black bg-white" />
+        </div>
+
+        <!-- Parking -->
+        <div class="mb-3">
+            <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" [(ngModel)]="filters.parking"
+                    class="w-3.5 h-3.5 text-dark-grey-blue border-gray-300 rounded focus:ring-dark-grey-blue" />
+                <span class="text-xs font-serif text-black">Parking</span>
+            </label>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex gap-2">
+            <button (click)="clearFilters()"
+                class="flex-1 px-2 py-1 text-xs border border-gray-300 text-black rounded hover:bg-gray-50 transition-colors font-serif">
+                Clear
+            </button>
+            <button (click)="applyFilters()"
+                class="flex-1 px-2 py-1 text-xs bg-dark-grey-blue text-white rounded hover:bg-opacity-90 transition-colors font-serif">
+                Apply
+            </button>
+        </div>
+    </div>
+
+    <!-- Backdrop -->
+    <div *ngIf="isOpen" (click)="togglePanel()" class="fixed inset-0 z-40">
+    </div>
+</div>
