@@ -46,43 +46,39 @@
     <div *ngIf="hasActiveFilters" class="flex gap-2 pointer-events-auto">
       <!-- Price Filter Badge -->
       <div *ngIf="activeFilters.minPrice || activeFilters.maxPrice"
-        class="flex items-center gap-2 bg-sandy-brown text-black px-3 py-2 rounded-lg font-serif text-sm">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        class="flex items-center gap-2 bg-sandy-brown text-black py-3 px-4 rounded-2xl font-serif text-2xl">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-8 h-8">
           <path d="M12 5v14M5 12l7-7 7 7" />
         </svg>
         <span>
           @if (activeFilters.minPrice && activeFilters.maxPrice) {
           ${{ activeFilters.minPrice / 1000000 }}M - ${{ activeFilters.maxPrice / 1000000 }}M
           } @else if (activeFilters.minPrice) {
-          Min: ${{ activeFilters.minPrice / 1000000 }}M
+         ${{ activeFilters.minPrice}}
           } @else {
-          Max: ${{ activeFilters.maxPrice! / 1000000 }}M
+         ${{ activeFilters.maxPrice! }}
           }
         </span>
-        <button (click)="removeFilter('minPrice'); removeFilter('maxPrice')"
-          class="hover:text-dark-grey-blue">×</button>
       </div>
 
       <!-- Bedrooms Filter Badge -->
       <div *ngIf="activeFilters.bedrooms !== undefined"
-        class="flex items-center gap-2 bg-sandy-brown text-black px-3 py-2 rounded-lg font-serif text-sm">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-          <path
+        class="flex items-center gap-2 bg-sandy-brown text-black py-3 px-4 rounded-2xl font-serif text-2xl">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8">
+          <path 
             d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V7H1v10h22v-6c0-2.21-1.79-4-4-4z" />
         </svg>
         <span>{{ activeFilters.bedrooms }}</span>
-        <button (click)="removeFilter('bedrooms')" class="hover:text-dark-grey-blue">×</button>
       </div>
 
       <!-- Parking Filter Badge -->
       <div *ngIf="activeFilters.parking !== undefined"
-        class="flex items-center gap-2 bg-sandy-brown text-black px-3 py-2 rounded-lg font-serif text-sm">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        class="flex items-center gap-2 bg-sandy-brown text-black py-3 px-4 rounded-2xl font-serif text-2xl">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8">
           <path
             d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z" />
         </svg>
         <span>Yes</span>
-        <button (click)="removeFilter('parking')" class="hover:text-dark-grey-blue">×</button>
       </div>
     </div>
 
