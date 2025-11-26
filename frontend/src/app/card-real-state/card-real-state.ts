@@ -12,4 +12,9 @@ import { ReplacePipe } from '../pipes/replace.pipe';
 })
 export class CardRealState {
   @Input() property!: Property;
+  isExpanded = false;
+
+  toggleExpanded() {
+    this.isExpanded = !this.isExpanded;
+  }
 }

@@ -1,4 +1,5 @@
-<div class="rounded-2xl overflow-hidden" style="background-color: #B8BBAA;">
+<!-- Compact View -->
+<div *ngIf="!isExpanded" class="rounded-2xl overflow-hidden" style="background-color: #B8BBAA;">
   <div class="relative h-56 overflow-hidden">
     <img [src]="property.image" [alt]="property.address" class="w-full h-full object-cover" />
   </div>
@@ -30,10 +31,67 @@
         class="flex-1 bg-dark-grey-blue text-white py-2.5 px-4 rounded-lg hover:bg-opacity-90 transition-colors font-serif text-sm">
         Buy
       </button>
-      <button
+      <button (click)="toggleExpanded()"
         class="flex-1 bg-dark-grey-blue text-white py-2.5 px-4 rounded-lg hover:bg-opacity-90 transition-colors font-serif text-sm">
         More info
       </button>
+    </div>
+  </div>
+</div>
+
+<!-- Expanded View - Full Screen Overlay -->
+<div *ngIf="isExpanded"
+  class="fixed inset-0 z-50 flex items-center justify-center pt-2 px-2 pb-28 md:pt-4 md:px-4 md:pb-32 animate-fadeIn">
+  <!-- Backdrop -->
+  <div (click)="toggleExpanded()" class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+
+  <!-- Modal Content -->
+  <div class="relative w-full max-w-6xl h-full rounded-2xl overflow-hidden shadow-2xl animate-slideUp"
+    style="background-color: #B8BBAA;">
+    <div class="flex flex-col md:flex-row h-full">
+      <!-- Large Image on Left -->
+      <div class="md:w-1/2 relative h-64 md:h-full overflow-hidden">
+        <img [src]="property.image" [alt]="property.address" class="w-full h-full object-cover" />
+      </div>
+
+      <!-- Details on Right -->
+      <div class="md:w-1/2 p-6 md:p-8 flex flex-col justify-between overflow-y-auto">
+        <div>
+          <button (click)="toggleExpanded()"
+            class="mb-4 text-black hover:text-dark-grey-blue transition-colors flex items-center gap-2">
+            <span class="text-2xl">←</span>
+            <span class="text-sm font-serif">Back</span>
+          </button>
+
+          <h2 class="text-2xl md:text-3xl font-serif mb-6 text-black">{{ property.address }}</h2>
+
+          <ul class="space-y-2 mb-6 text-base md:text-lg text-black font-serif">
+            <li class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-black"></span>
+              Bedrooms: {{ property.bedrooms }}.
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-black"></span>
+              Bathrooms: {{ property.bathrooms }}.
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-black"></span>
+              Parking: {{ property.parking ? 'Yes' : 'No' }}.
+            </li>
+          </ul>
+
+          <p class="text-lg md:text-xl font-serif mb-8 text-black">
+            Price: {{ property.price | currency:'USD':'symbol':'1.0-0' | replace:',':' ' }}.
+          </p>
+        </div>
+
+        <div class="flex justify-end mt-4">
+          <button
+            class="bg-dark-grey-blue text-white py-3 px-8 rounded-lg hover:bg-opacity-90 transition-colors font-serif">
+            Buy
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
