@@ -1,9 +1,37 @@
-<div class="border-aubergine border-2 rounded-lg overflow-clip">
-  <img class="max-h-64" src="/demo/house1.jpg" />
-  <h2 class="text-lg mx-1">Elegant Coastal-Style Home with Timeless Charm</h2>
-  <p class="mx-1">
-    Step into classic New England elegance with this beautifully maintained, shingle-style
-    residence. Featuring inviting curb appeal, a spacious wraparound porch, and stunning
-    architectural details, this home perfectly balances sophistication and comfort.
-  </p>
+<div class="bg-green-white/50 rounded-xl overflow-clip shadow-sm hover:shadow-md transition-shadow duration-300">
+  <div class="relative h-48 overflow-hidden">
+    <img [src]="property.image" [alt]="property.address" class="w-full h-full object-cover" />
+  </div>
+  
+  <div class="p-6">
+    <h2 class="text-2xl font-serif mb-4 text-black">{{ property.address }}</h2>
+    
+    <ul class="space-y-1 mb-4 text-black/80 font-serif">
+      <li class="flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-black"></span>
+        Bedrooms: {{ property.bedrooms }}.
+      </li>
+      <li class="flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-black"></span>
+        Bathrooms: {{ property.bathrooms }}.
+      </li>
+      <li class="flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-black"></span>
+        Parking: {{ property.parking ? 'Yes' : 'No' }}.
+      </li>
+    </ul>
+
+    <p class="text-lg font-serif mb-6 text-black">
+      Price: {{ property.price | currency:'USD':'symbol':'1.0-0' | replace:',':' ' }}.
+    </p>
+
+    <div class="flex gap-4">
+      <button class="flex-1 bg-dark-grey-blue text-white py-2 px-4 rounded hover:bg-opacity-90 transition-colors font-serif">
+        Buy
+      </button>
+      <button class="flex-1 bg-dark-grey-blue text-white py-2 px-4 rounded hover:bg-opacity-90 transition-colors font-serif">
+        More info
+      </button>
+    </div>
+  </div>
 </div>

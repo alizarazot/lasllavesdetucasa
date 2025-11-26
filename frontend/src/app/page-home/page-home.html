@@ -1,15 +1,46 @@
-<div class="h-dvh flex flex-col bg-green-white">
-  <nav class="flex items-center h-16 px-4 py-2 shadow-sm">
-    <img class="h-full" src="/full-logo.jpeg" />
-    <div class="flex-grow"></div>
-    <a routerLink="/login">Sign In</a>
-  </nav>
-  <main class="flex flex-col p-10 gap-10 overflow-y-scroll">
-    <h1 class="text-2xl">Real State</h1>
-    <div class="grid grid-cols-[repeat(auto-fit,_minmax(256px,_1fr))] gap-10">
-      @for (item of numItems; track $index) {
-        <app-card-real-state />
+```
+<div class="min-h-screen flex flex-col bg-green-white overflow-x-hidden">
+
+  <!-- Fixed Header (Appears on scroll) -->
+  <header
+    class="fixed top-0 left-0 right-0 h-16 bg-dark-grey-blue text-white flex items-center justify-center px-6 z-40 transition-transform duration-300 transform"
+    [class.-translate-y-full]="!showFixedHeader" [class.translate-y-0]="showFixedHeader">
+
+    <h1 class="text-xl font-serif">Inmobiliaria Las llaves de tu casa</h1>
+
+    <div class="absolute right-6">
+      <a routerLink="/login">
+        <img src="/assets/log-in-sharp.svg" class="w-6 h-6 text-white invert" alt="Login" />
+      </a>
+    </div>
+  </header>
+
+  <!-- Top Right User Icon (Hero only) -->
+  <div class="absolute top-0 right-0 p-6 z-10">
+    <a routerLink="/login">
+      <img src="/assets/person-sharp.svg" class="w-10 h-10 text-aubergine" alt="User" />
+    </a>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="flex flex-col items-center justify-center min-h-dvh gap-8 px-4">
+    <img src="/full-logo.jpeg" alt="Las llaves de tu casa" class="w-full max-w-md mix-blend-multiply" />
+  </section>
+
+  <!-- Catalog Section -->
+  <main class="flex flex-col px-10 pb-40 gap-10">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto w-full">
+      @for (property of properties; track property.address) {
+      <app-card-real-state [property]="property" />
       }
     </div>
   </main>
+
+  <!-- Floating Search Bar -->
+  <div class="fixed bottom-8 left-0 right-0 z-50 px-4 flex justify-center pointer-events-none">
+    <div class="w-full max-w-2xl pointer-events-auto">
+      <app-search-bar />
+    </div>
+  </div>
 </div>
+```
