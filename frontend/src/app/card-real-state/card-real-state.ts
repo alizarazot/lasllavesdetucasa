@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
+import { Button } from '../button/button';
+
 @Component({
   selector: 'app-card-real-state',
-  imports: [],
+  imports: [Button],
   templateUrl: './card-real-state.html',
-  styleUrl: './card-real-state.css',
 })
 export class CardRealState {}
