@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 import { OmnibarItem } from '../omnibar-item/omnibar-item';
 
@@ -7,4 +7,15 @@ import { OmnibarItem } from '../omnibar-item/omnibar-item';
   imports: [OmnibarItem],
   templateUrl: './omnibar.html',
 })
-export class Omnibar {}
+export class Omnibar {
+  bedroomMax = input(null);
+  bedroomMin = input(null);
+
+  bathroomMax = input(null);
+  bathroomMin = input(null);
+
+  priceMax = input(null);
+  priceMin = input(null);
+
+  hasParking = input(false);
+}

@@ -1,18 +1,28 @@
 <div class="flex gap-3 font-serif fixed bottom-10 right-1/2 translate-x-1/2">
-  <app-omnibar-item [upper]="30">
-    <svg xmlns="http://www.w3.org/2000/svg" class="p-0" viewBox="0 0 512 512">
-      <path
-        d="M432 224V96a16 16 0 00-16-16H96a16 16 0 00-16 16v128a48 48 0 00-48 48v160h36v-32h376v32h36V272a48 48 0 00-48-48zm-192 0H120v-32a16 16 0 0116-16h88a16 16 0 0116 16zm32-32a16 16 0 0116-16h88a16 16 0 0116 16v32H272z"
-      />
-    </svg>
-  </app-omnibar-item>
-  <app-omnibar-item [lower]="9999999999">
-    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
-      <path
-        d="M256 43.91s-144 158.3-144 270.3c0 88.36 55.64 144 144 144s144-55.64 144-144c0-112-144-270.3-144-270.3zm16 362.3v-24a60.07 60.07 0 0060-60h24a84.09 84.09 0 01-84 84z"
-      />
-    </svg>
-  </app-omnibar-item>
+  @if (bedroomMax() !== null || bedroomMin() !== null) {
+    <app-omnibar-item
+      [upper]="bedroomMax() === null ? 0 : bedroomMax()!"
+      [lower]="bedroomMin() === null ? -1 : bedroomMin()!"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="p-0" viewBox="0 0 512 512">
+        <path
+          d="M432 224V96a16 16 0 00-16-16H96a16 16 0 00-16 16v128a48 48 0 00-48 48v160h36v-32h376v32h36V272a48 48 0 00-48-48zm-192 0H120v-32a16 16 0 0116-16h88a16 16 0 0116 16zm32-32a16 16 0 0116-16h88a16 16 0 0116 16v32H272z"
+        />
+      </svg>
+    </app-omnibar-item>
+  }
+  @if (bathroomMax() !== null || bathroomMax() !== null) {
+    <app-omnibar-item
+      [upper]="bathroomMax() === null ? 0 : bathroomMax()!"
+      [lower]="bathroomMin() === null ? -1 : bathroomMin()!"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+        <path
+          d="M256 43.91s-144 158.3-144 270.3c0 88.36 55.64 144 144 144s144-55.64 144-144c0-112-144-270.3-144-270.3zm16 362.3v-24a60.07 60.07 0 0060-60h24a84.09 84.09 0 01-84 84z"
+        />
+      </svg>
+    </app-omnibar-item>
+  }
 
   <div class="flex rounded-2xl bg-sandy-brown text-black">
     <input class="p-4 outline-0 text-xl w-90" placeholder="Describe your ideal apartment..." />
@@ -27,22 +37,30 @@
     </svg>
   </div>
 
-  <app-omnibar-item [upper]="840" [lower]="123">
-    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
-      <path
-        d="M48 368h416v32H48zM80 416h352v32H80zM480 176a96.11 96.11 0 01-96-96V64H128v16a96.11 96.11 0 01-96 96H16v64h16a96.11 96.11 0 0196 96v16h256v-16a96.11 96.11 0 0196-96h16v-64zM256 304a96 96 0 1196-96 96.11 96.11 0 01-96 96z"
-      />
-      <path
-        d="M96 80V64H16v80h16a64.07 64.07 0 0064-64zM32 272H16v80h80v-16a64.07 64.07 0 00-64-64zM480 144h16V64h-80v16a64.07 64.07 0 0064 64zM416 336v16h80v-80h-16a64.07 64.07 0 00-64 64z"
-      />
-      <circle cx="256" cy="208" r="64" />
-    </svg>
-  </app-omnibar-item>
-  <app-omnibar-item [required]="true">
-    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
-      <path
-        d="M447.68 220.78a16.44 16.44 0 00-1-3.1l-48-112A16 16 0 00384 96H128a16 16 0 00-14.71 9.7l-48 112a16.44 16.44 0 00-1 3.1A16.15 16.15 0 0064 224v184a8 8 0 008 8h32a8 8 0 008-8v-24h288v24a8 8 0 008 8h32a8 8 0 008-8V224a16.15 16.15 0 00-.32-3.22zM144 320a32 32 0 1132-32 32 32 0 01-32 32zm224 0a32 32 0 1132-32 32 32 0 01-32 32zM104.26 208l34.29-80h234.9l34.29 80z"
-      />
-    </svg>
-  </app-omnibar-item>
+  @if (priceMax() !== null || priceMin() !== null) {
+    <app-omnibar-item
+      [upper]="priceMax() === null ? 0 : priceMax()!"
+      [lower]="priceMin() === null ? -1 : priceMin()!"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+        <path
+          d="M48 368h416v32H48zM80 416h352v32H80zM480 176a96.11 96.11 0 01-96-96V64H128v16a96.11 96.11 0 01-96 96H16v64h16a96.11 96.11 0 0196 96v16h256v-16a96.11 96.11 0 0196-96h16v-64zM256 304a96 96 0 1196-96 96.11 96.11 0 01-96 96z"
+        />
+        <path
+          d="M96 80V64H16v80h16a64.07 64.07 0 0064-64zM32 272H16v80h80v-16a64.07 64.07 0 00-64-64zM480 144h16V64h-80v16a64.07 64.07 0 0064 64zM416 336v16h80v-80h-16a64.07 64.07 0 00-64 64z"
+        />
+        <circle cx="256" cy="208" r="64" />
+      </svg>
+    </app-omnibar-item>
+  }
+
+  @if (hasParking()) {
+    <app-omnibar-item [required]="hasParking()">
+      <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+        <path
+          d="M447.68 220.78a16.44 16.44 0 00-1-3.1l-48-112A16 16 0 00384 96H128a16 16 0 00-14.71 9.7l-48 112a16.44 16.44 0 00-1 3.1A16.15 16.15 0 0064 224v184a8 8 0 008 8h32a8 8 0 008-8v-24h288v24a8 8 0 008 8h32a8 8 0 008-8V224a16.15 16.15 0 00-.32-3.22zM144 320a32 32 0 1132-32 32 32 0 01-32 32zm224 0a32 32 0 1132-32 32 32 0 01-32 32zM104.26 208l34.29-80h234.9l34.29 80z"
+        />
+      </svg>
+    </app-omnibar-item>
+  }
 </div>
