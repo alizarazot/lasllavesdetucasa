@@ -1,0 +1,67 @@
+<div class="bg-sandy-brown rounded-2xl p-4 flex gap-1 items-center">
+  <div class="h-10 w-10 p-0">
+    <ng-content />
+  </div>
+
+  @if (required()) {
+    <span class="text-lg">Yes</span>
+  } @else {
+    @if (upper() > 0 && lower() > -1) {
+      <div class="text-sm">
+        <div class="flex">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 512 512">
+            <path
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="square"
+              stroke-miterlimit="10"
+              stroke-width="48"
+              d="M112 244l144-144 144 144M256 120v292"
+            />
+          </svg>
+          {{ upper() }}
+        </div>
+        <div class="flex">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 512 512">
+            <path
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="square"
+              stroke-miterlimit="10"
+              stroke-width="48"
+              d="M112 268l144 144 144-144M256 392V100"
+            />
+          </svg>
+          {{ lower() }}
+        </div>
+      </div>
+    } @else {
+      <div class="ml-1 flex flex-col items-center">
+        @if (upper() > 0) {
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 512 512">
+            <path
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="square"
+              stroke-miterlimit="10"
+              stroke-width="48"
+              d="M112 244l144-144 144 144M256 120v292"
+            />
+          </svg>
+        } @else {
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 512 512">
+            <path
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="square"
+              stroke-miterlimit="10"
+              stroke-width="48"
+              d="M112 268l144 144 144-144M256 392V100"
+            />
+          </svg>
+        }
+        {{ upper() > 0 ? upper() : lower() }}
+      </div>
+    }
+  }
+</div>
