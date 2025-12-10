@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { CardRealState } from '../card-real-state/card-real-state';
+import { PageDashboard } from '../page-dashboard/page-dashboard';
 
 @Component({
   selector: 'app-page-home',
-  imports: [RouterLink, CardRealState],
+  imports: [RouterLink, PageDashboard],
   templateUrl: './page-home.html',
 })
 export class PageHome {
