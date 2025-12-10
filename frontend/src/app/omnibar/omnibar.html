@@ -19,8 +19,13 @@
   }
 
   <div class="flex rounded-2xl bg-sandy-brown text-black">
-    <input class="p-4 outline-0 text-xl w-90" placeholder="Describe your ideal apartment..." />
+    <input
+      class="p-4 outline-0 text-xl w-90"
+      placeholder="Describe your ideal apartment..."
+      [formControl]="userDescription"
+    />
     <svg
+      (click)="makeEventFilters()"
       xmlns="http://www.w3.org/2000/svg"
       class="m-4 ml-0 w-10 h-10 cursor-pointer"
       viewBox="0 0 512 512"

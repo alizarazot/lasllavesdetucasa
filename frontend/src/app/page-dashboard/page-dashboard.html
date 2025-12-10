@@ -2,7 +2,7 @@
   <app-topbar class="sticky top-0" (filtersClick)="toggleFilters()" />
 
   <div class="grid grid-cols-3 content-stretch gap-10 p-10">
-    @for (realState of realStates(); track realState.id) {
+    @for (realState of realStatesProcessed(); track realState.id) {
       <app-card-real-state
         [title]="realState.title"
         [bedrooms]="realState.bedrooms"
@@ -50,6 +50,7 @@
   }
 
   <app-omnibar
+    (makeFilters)="processFilters($event)"
     [bedroomMax]="bedroomMax.value!"
     [bedroomMin]="bedroomMin.value!"
     [bathroomMax]="bathroomMax.value!"

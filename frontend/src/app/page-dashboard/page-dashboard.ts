@@ -1,5 +1,6 @@
-import { Component, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, computed, OnInit, signal, WritableSignal, Signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 import { Topbar } from '../topbar/topbar';
 import { Omnibar } from '../omnibar/omnibar';
@@ -15,6 +16,16 @@ interface RealState {
   pictures: string[];
 }
 
+interface Filters {
+  bedroomMax: number;
+  bedroomMin: number;
+  bathroomMax: number;
+  bathroomMin: number;
+  priceMax: number;
+  priceMin: number;
+  hasParking: boolean;
+}
+
 @Component({
   selector: 'app-page-dashboard',
   imports: [ReactiveFormsModule, Topbar, Omnibar, CardRealState],
@@ -22,8 +33,35 @@ interface RealState {
 })
 export class PageDashboard implements OnInit {
   realStates: WritableSignal<RealState[]> = signal([]);
+  realStatesProcessed: Signal<RealState[]> = computed(() =>
+    this.realStates().filter((realState) => {
+      if (this.bedroomMaxSignal()! > 0 && realState.bedrooms > this.bedroomMaxSignal()!) {
+        return false;
+      }
+      if (this.bedroomMinSignal()! > -1 && realState.bedrooms < this.bedroomMinSignal()!) {
+        return false;
+      }
+      if (this.bathroomMaxSignal()! > 0 && realState.bathrooms > this.bathroomMaxSignal()!) {
+        return false;
+      }
+      if (this.bathroomMinSignal()! > 0 && realState.bathrooms < this.bathroomMinSignal()!) {
+        return false;
+      }
+      if (this.priceMaxSignal()! > 0 && realState.price > this.priceMaxSignal()!) {
+        return false;
+      }
+      if (this.priceMinSignal()! > 0 && realState.price < this.priceMinSignal()!) {
+        return false;
+      }
+      if (this.hasParkingSignal()! && !realState.hasParking) {
+        return false;
+      }
 
-  showFiltersModal = signal(true);
+      return true;
+    }),
+  );
+
+  showFiltersModal = signal(false);
 
   bedroomMax = new FormControl(0);
   bedroomMin = new FormControl(-1);
@@ -33,6 +71,14 @@ export class PageDashboard implements OnInit {
   priceMin = new FormControl(-1);
   hasParking = new FormControl(false);
 
+  bedroomMaxSignal = toSignal(this.bedroomMax.valueChanges);
+  bedroomMinSignal = toSignal(this.bedroomMin.valueChanges);
+  bathroomMaxSignal = toSignal(this.bathroomMax.valueChanges);
+  bathroomMinSignal = toSignal(this.bathroomMin.valueChanges);
+  priceMaxSignal = toSignal(this.priceMax.valueChanges);
+  priceMinSignal = toSignal(this.priceMin.valueChanges);
+  hasParkingSignal = toSignal(this.hasParking.valueChanges);
+
   async ngOnInit() {
     const query = await fetch(window.location.origin + '/real-states');
     this.realStates.set(await query.json());
@@ -41,5 +87,25 @@ export class PageDashboard implements OnInit {
 
   toggleFilters() {
     this.showFiltersModal.set(!this.showFiltersModal());
+  }
+
+  async processFilters(description: string) {
+    console.log('Make filter:', description);
+
+    const query = await fetch(
+      window.location.origin +
+        '/make-filters?' +
+        new URLSearchParams({ description: description }).toString(),
+    );
+
+    const filters: Filters = await query.json();
+
+    this.bedroomMax.setValue(filters.bedroomMax);
+    this.bedroomMin.setValue(filters.bedroomMin);
+    this.bathroomMax.setValue(filters.bathroomMax);
+    this.bathroomMin.setValue(filters.bathroomMin);
+    this.priceMax.setValue(filters.priceMax);
+    this.priceMin.setValue(filters.priceMin);
+    this.hasParking.setValue(filters.hasParking);
   }
 }

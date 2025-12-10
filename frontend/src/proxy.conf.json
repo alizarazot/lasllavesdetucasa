@@ -2,5 +2,9 @@
   "/real-states": {
     "target": "http://localhost:8080",
     "secure": false
+  },
+  "/make-filters": {
+    "target": "http://localhost:8080",
+    "secure": false
   }
 }
