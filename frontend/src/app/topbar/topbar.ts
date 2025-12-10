@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, output } from '@angular/core';
 
 @Component({
   selector: 'app-topbar',
   imports: [],
   templateUrl: './topbar.html',
 })
-export class Topbar {}
+export class Topbar {
+  filtersClick = output<void>();
+}

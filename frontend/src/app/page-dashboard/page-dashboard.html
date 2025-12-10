@@ -1,5 +1,5 @@
 <div class="min-h-dvh bg-green-white-2">
-  <app-topbar class="sticky top-0" />
+  <app-topbar class="sticky top-0" (filtersClick)="toggleFilters()" />
 
   <div class="grid grid-cols-3 content-stretch gap-10 p-10">
     @for (realState of realStates(); track realState.id) {
@@ -13,5 +13,49 @@
     }
   </div>
 
-  <app-omnibar />
+  @if (showFiltersModal()) {
+    <div class="fixed bottom-1/2 rigth-1/2 translate-1/2 bg-white">
+      <div>
+        Bedrooms:
+
+        <label for="bedroom-max">Max: </label>
+        <input id="bedroom-max" type="number" [formControl]="bedroomMax" />
+
+        <label for="bedroom-min">Min: </label>
+        <input id="bedroom-min" type="number" [formControl]="bedroomMin" />
+      </div>
+      <div>
+        Bathrooms:
+
+        <label for="bathroom-max">Max: </label>
+        <input id="bathroom-max" type="number" [formControl]="bathroomMax" />
+
+        <label for="bathroom-min">Min: </label>
+        <input id="bathroom-min" type="number" [formControl]="bathroomMin" />
+      </div>
+      <div>
+        Price:
+
+        <label for="price-max">Max: </label>
+        <input id="price-max" type="number" [formControl]="priceMax" />
+
+        <label for="price-min">Min: </label>
+        <input id="price-min" type="number" [formControl]="priceMin" />
+      </div>
+      <div>
+        Has parking:
+        <input id="has-parking" type="checkbox" [formControl]="hasParking" />
+      </div>
+    </div>
+  }
+
+  <app-omnibar
+    [bedroomMax]="bedroomMax.value!"
+    [bedroomMin]="bedroomMin.value!"
+    [bathroomMax]="bathroomMax.value!"
+    [bathroomMin]="bathroomMin.value!"
+    [priceMax]="priceMax.value!"
+    [priceMin]="priceMin.value!"
+    [hasParking]="hasParking.value!"
+  />
 </div>

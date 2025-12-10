@@ -8,14 +8,14 @@ import { OmnibarItem } from '../omnibar-item/omnibar-item';
   templateUrl: './omnibar.html',
 })
 export class Omnibar {
-  bedroomMax = input(null);
-  bedroomMin = input(null);
+  bedroomMax = input(0);
+  bedroomMin = input(-1);
 
-  bathroomMax = input(null);
-  bathroomMin = input(null);
+  bathroomMax = input(0);
+  bathroomMin = input(-1);
 
-  priceMax = input(null);
-  priceMin = input(null);
+  priceMax = input(0);
+  priceMin = input(-1);
 
   hasParking = input(false);
 }

@@ -1,9 +1,6 @@
 <div class="flex gap-3 font-serif fixed bottom-10 right-1/2 translate-x-1/2">
-  @if (bedroomMax() !== null || bedroomMin() !== null) {
-    <app-omnibar-item
-      [upper]="bedroomMax() === null ? 0 : bedroomMax()!"
-      [lower]="bedroomMin() === null ? -1 : bedroomMin()!"
-    >
+  @if (bedroomMax() > 0 || bedroomMin() > -1) {
+    <app-omnibar-item [upper]="bedroomMax()" [lower]="bedroomMin()">
       <svg xmlns="http://www.w3.org/2000/svg" class="p-0" viewBox="0 0 512 512">
         <path
           d="M432 224V96a16 16 0 00-16-16H96a16 16 0 00-16 16v128a48 48 0 00-48 48v160h36v-32h376v32h36V272a48 48 0 00-48-48zm-192 0H120v-32a16 16 0 0116-16h88a16 16 0 0116 16zm32-32a16 16 0 0116-16h88a16 16 0 0116 16v32H272z"
@@ -11,11 +8,8 @@
       </svg>
     </app-omnibar-item>
   }
-  @if (bathroomMax() !== null || bathroomMax() !== null) {
-    <app-omnibar-item
-      [upper]="bathroomMax() === null ? 0 : bathroomMax()!"
-      [lower]="bathroomMin() === null ? -1 : bathroomMin()!"
-    >
+  @if (bathroomMax() > 0 || bathroomMin() > -1) {
+    <app-omnibar-item [upper]="bathroomMax()" [lower]="bathroomMin()">
       <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
         <path
           d="M256 43.91s-144 158.3-144 270.3c0 88.36 55.64 144 144 144s144-55.64 144-144c0-112-144-270.3-144-270.3zm16 362.3v-24a60.07 60.07 0 0060-60h24a84.09 84.09 0 01-84 84z"
@@ -37,11 +31,8 @@
     </svg>
   </div>
 
-  @if (priceMax() !== null || priceMin() !== null) {
-    <app-omnibar-item
-      [upper]="priceMax() === null ? 0 : priceMax()!"
-      [lower]="priceMin() === null ? -1 : priceMin()!"
-    >
+  @if (priceMax() > 0 || priceMin() > -1) {
+    <app-omnibar-item [upper]="priceMax()" [lower]="priceMin()">
       <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
         <path
           d="M48 368h416v32H48zM80 416h352v32H80zM480 176a96.11 96.11 0 01-96-96V64H128v16a96.11 96.11 0 01-96 96H16v64h16a96.11 96.11 0 0196 96v16h256v-16a96.11 96.11 0 0196-96h16v-64zM256 304a96 96 0 1196-96 96.11 96.11 0 01-96 96z"
