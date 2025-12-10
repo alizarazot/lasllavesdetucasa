@@ -1,16 +1,18 @@
-<div class="bg-green-white rounded-lg pb-3 overflow-clip">
+<div class="h-full bg-green-white rounded-lg pb-3 overflow-clip flex flex-col">
   <img class="max-h-64 inset-shadow-sm" src="/demo/house1.jpg" alt="" />
   <div class="font-serif m-3 text-sm">
-    <h2 class="text-lg">Elegant Coastal-Style</h2>
+    <h2 class="text-lg">{{ title() }}</h2>
     <br />
     <ul class="ml-4">
-      <li class="list-disc">Bedrooms: 4.</li>
-      <li class="list-disc">Bathrooms: 2.</li>
-      <li class="list-disc">Parking: Yes.</li>
+      <li class="list-disc">Bedrooms: {{ bedrooms() }}.</li>
+      <li class="list-disc">Bathrooms: {{ bathrooms() }}.</li>
+      <li class="list-disc">Parking: {{ hasParking() ? 'Yes' : 'No' }}.</li>
     </ul>
     <br />
-    Price: $127 000 000.
+    Price: ${{ price() }}.
   </div>
+
+  <div class="grow"></div>
 
   <div class="mx-3 flex gap-3">
     <app-button class="grow" text="Buy" />

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 import { Button } from '../button/button';
 
@@ -7,4 +7,10 @@ import { Button } from '../button/button';
   imports: [Button],
   templateUrl: './card-real-state.html',
 })
-export class CardRealState {}
+export class CardRealState {
+  title = input('');
+  bedrooms = input(0);
+  bathrooms = input(0);
+  hasParking = input(false);
+  price = input(0);
+}

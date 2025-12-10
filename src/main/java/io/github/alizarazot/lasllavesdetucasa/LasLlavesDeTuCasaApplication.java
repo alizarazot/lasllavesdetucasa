@@ -13,8 +13,9 @@ public class LasLlavesDeTuCasaApplication {
     SpringApplication.run(LasLlavesDeTuCasaApplication.class, args);
   }
 
-  @GetMapping("/")
+  /*@GetMapping("/")
   public String index() {
     return "<h1>Hello World!</h1>";
   }
+    */
 }

@@ -1,13 +1,16 @@
 <div class="min-h-dvh bg-green-white-2">
   <app-topbar class="sticky top-0" />
 
-  <div class="grid grid-cols-3 gap-10 p-10">
-    <app-card-real-state></app-card-real-state>
-    <app-card-real-state></app-card-real-state>
-    <app-card-real-state></app-card-real-state>
-    <app-card-real-state></app-card-real-state>
-    <app-card-real-state></app-card-real-state>
-    <app-card-real-state></app-card-real-state>
+  <div class="grid grid-cols-3 content-stretch gap-10 p-10">
+    @for (realState of realStates(); track realState.id) {
+      <app-card-real-state
+        [title]="realState.title"
+        [bedrooms]="realState.bedrooms"
+        [bathrooms]="realState.bathrooms"
+        [hasParking]="realState.hasParking"
+        [price]="realState.price"
+      />
+    }
   </div>
 
   <app-omnibar />
