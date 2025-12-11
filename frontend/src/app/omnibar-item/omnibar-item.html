@@ -6,7 +6,9 @@
   @if (required()) {
     <span class="text-lg">Yes</span>
   } @else {
-    @if (upper() > 0 && lower() > -1) {
+    @if (upper() === lower()) {
+      <span class="text-lg">{{ upper() }}</span>
+    } @else if (upper() > 0 && lower() > -1) {
       <div class="text-sm">
         <div class="flex">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 512 512">
