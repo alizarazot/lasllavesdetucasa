@@ -1,13 +1,19 @@
 <header class="h-dvh bg-green-white-2 relative">
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    class="absolute w-10 h-10 right-5 top-5 cursor-pointer"
-    viewBox="0 0 512 512"
+  <button
+    (click)="router.navigate(['/login'])"
+    class="w-10 h-10 cursor-pointer absolute right-5 top-5"
   >
-    <path
-      d="M256 256a112 112 0 10-112-112 112 112 0 00112 112zm0 32c-69.42 0-208 42.88-208 128v64h416v-64c0-85.12-138.58-128-208-128z"
-    />
-  </svg>
+    @if (hasSignIn()) {
+      <img class="rounded-full" src="{{ pfpUrl() }}" alt="" />
+    } @else {
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+        <path
+          fill="#000"
+          d="M432 80H192a16 16 0 00-16 16v144h153.37l-64-64L288 153.37l91.31 91.32a16 16 0 010 22.62L288 358.63 265.37 336l64-64H176v144a16 16 0 0016 16h240a16 16 0 0016-16V96a16 16 0 00-16-16zM64 240h112v32H64z"
+        />
+      </svg>
+    }
+  </button>
   <img
     class="w-96 absolute right-1/2 bottom-1/2 translate-1/2 mb-10"
     src="/full-logo.jpeg"

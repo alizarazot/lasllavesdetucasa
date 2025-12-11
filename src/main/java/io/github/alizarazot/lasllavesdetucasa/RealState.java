@@ -24,8 +24,7 @@ public class RealState {
 
   private String picture;
 
-  public RealState() {
-  }
+  public RealState() {}
 
   public Long getId() {
     return id;
