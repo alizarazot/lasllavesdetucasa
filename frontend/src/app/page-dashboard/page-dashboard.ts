@@ -108,5 +108,7 @@ export class PageDashboard implements OnInit {
     this.priceMax.setValue(filters.priceMax);
     this.priceMin.setValue(filters.priceMin);
     this.hasParking.setValue(filters.hasParking);
+
+    console.log('Filtered!');
   }
 }
