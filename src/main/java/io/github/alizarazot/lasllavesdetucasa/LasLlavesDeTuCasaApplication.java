@@ -51,5 +51,13 @@ public class LasLlavesDeTuCasaApplication {
             + hour
             + ").");
     emailSender.send(message);
+
+    SimpleMailMessage msgEmployee = new SimpleMailMessage();
+    msgEmployee.setFrom("info@inmobix.localhost");
+    msgEmployee.setTo(System.getenv("EMAIL_USERNAME"));
+    msgEmployee.setSubject("Appointment: " + date + ", " + hour);
+    msgEmployee.setText(
+        "An appointment has been made: " + realState.getTitle() + "\n\n" + "From: " + email);
+    emailSender.send(msgEmployee);
   }
 }
