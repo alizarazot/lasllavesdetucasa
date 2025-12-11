@@ -8,6 +8,7 @@ import { Button } from '../button/button';
   templateUrl: './card-real-state.html',
 })
 export class CardRealState {
+  id = input(0);
   title = input('');
   bedrooms = input(0);
   bathrooms = input(0);

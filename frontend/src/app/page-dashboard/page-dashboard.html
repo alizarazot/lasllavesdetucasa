@@ -4,6 +4,7 @@
   <div class="grid grid-cols-3 content-stretch gap-10 p-10">
     @for (realState of realStatesProcessed(); track realState.id) {
       <app-card-real-state
+        [id]="realState.id"
         [title]="realState.title"
         [bedrooms]="realState.bedrooms"
         [bathrooms]="realState.bathrooms"
