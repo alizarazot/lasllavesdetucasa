@@ -82,7 +82,6 @@ export class PageDashboard implements OnInit {
   async ngOnInit() {
     const query = await fetch(window.location.origin + '/real-states');
     this.realStates.set(await query.json());
-    console.log(this.realStates());
   }
 
   toggleFilters() {

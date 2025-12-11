@@ -1,16 +1,23 @@
 package io.github.alizarazot.lasllavesdetucasa;
 
-import java.util.ArrayList;
+import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+
+
 
 @RestController
 public class RealStateController {
+    @Autowired
+    private RealStateRepository realStateRepository;
+
   @GetMapping("/real-states")
-  public ArrayList<RealState> realState() {
-    return RealStateController.getSampleProperties();
+  public List<RealState> realState() {
+    return realStateRepository.findAll();
   }
 
+  /* 
   public static ArrayList<RealState> getSampleProperties() {
     ArrayList<RealState> properties = new ArrayList<>();
 
@@ -90,5 +97,5 @@ public class RealStateController {
             null));
 
     return properties;
-  }
+  }*/
 }
