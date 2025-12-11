@@ -2,6 +2,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Topbar } from '../topbar/topbar';
 import { Button } from '../button/button';
+import { FormsModule } from '@angular/forms';
 
 interface RealState {
   id: number;
@@ -15,7 +16,7 @@ interface RealState {
 
 @Component({
   selector: 'app-page-buy',
-  imports: [Topbar, Button],
+  imports: [Topbar, Button, FormsModule],
   templateUrl: './page-buy.html',
 })
 export class PageBuy implements OnInit {
@@ -33,7 +34,6 @@ export class PageBuy implements OnInit {
   });
 
   async ngOnInit() {
-    console.log('hesy');
     const query = await fetch(
       window.location.origin + '/real-state/' + this.id.snapshot.paramMap.get('id')?.toString(),
     );
@@ -49,5 +49,33 @@ export class PageBuy implements OnInit {
       this.router.serializeUrl(this.router.createUrlTree(['/contract-summary'])),
       '_blank',
     );
+  }
+
+  date = signal('');
+  hour = signal('');
+  email = signal('');
+
+  text = signal('Schedule an appointment!');
+
+  async sendEmail() {
+    console.log('Sending email:', this.email(), this.date(), this.hour());
+
+    await fetch(
+      window.location.origin +
+        '/send-email/' +
+        this.realState().id.toString() +
+        '?' +
+        new URLSearchParams({
+          email: this.email(),
+          date: this.date(),
+          hour: this.hour(),
+        }).toString(),
+    );
+
+    this.text.set('Check your email!');
+
+    setTimeout(() => {
+      this.text.set('Schedule an appointment!');
+    }, 5000);
   }
 }
