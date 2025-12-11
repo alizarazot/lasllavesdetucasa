@@ -52,8 +52,18 @@
       />
     </div>
     <div class="flex gap-3 mb-8">
-      <input [(ngModel)]="date" class="bg-green-white rounded-lg px-2 outline-0" type="date" />
-      <input [(ngModel)]="hour" class="bg-green-white rounded-lg px-2 outline-0" type="time" />
+      <input
+        [(ngModel)]="date"
+        class="bg-green-white rounded-lg px-2 outline-0"
+        type="date"
+        min="{{ currentDate }}"
+      />
+      <input
+        [(ngModel)]="hour"
+        class="bg-green-white rounded-lg px-2 outline-0"
+        type="time"
+        min="{{ currentHour }}"
+      />
       <app-button (atClick)="sendEmail()" text="{{ text() }}" />
     </div>
   </div>

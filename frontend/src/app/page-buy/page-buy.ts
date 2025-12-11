@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Topbar } from '../topbar/topbar';
 import { Button } from '../button/button';
 import { FormsModule } from '@angular/forms';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 interface RealState {
   id: number;
@@ -38,6 +39,14 @@ export class PageBuy implements OnInit {
       window.location.origin + '/real-state/' + this.id.snapshot.paramMap.get('id')?.toString(),
     );
     this.realState.set(await query.json());
+
+    onAuthStateChanged(getAuth(), (user) => {
+      if (user) {
+        this.email.set(user.providerData[0].email ?? '');
+      } else {
+        this.email.set('');
+      }
+    });
   }
 
   showContract() {
@@ -51,14 +60,19 @@ export class PageBuy implements OnInit {
     );
   }
 
-  date = signal('');
-  hour = signal('');
+  currentDate = new Date().toISOString().split('T')[0];
+  currentHour = new Date(Math.ceil(Date.now() / 3600000) * 3600000).toTimeString().slice(0, 5);
+
+  date = signal(this.currentDate);
+  hour = signal(this.currentHour);
   email = signal('');
 
   text = signal('Schedule an appointment!');
 
   async sendEmail() {
     console.log('Sending email:', this.email(), this.date(), this.hour());
+
+    this.text.set('Making appointment...');
 
     await fetch(
       window.location.origin +
