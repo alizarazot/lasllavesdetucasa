@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 import { Button } from '../button/button';
 
@@ -8,6 +8,8 @@ import { Button } from '../button/button';
   templateUrl: './card-real-state.html',
 })
 export class CardRealState {
+  buyRealState = output<number>();
+
   id = input(0);
   title = input('');
   bedrooms = input(0);

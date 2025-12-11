@@ -1,10 +1,11 @@
-import { Component, computed, OnInit, signal, WritableSignal, Signal } from '@angular/core';
+import { Component, computed, OnInit, signal, WritableSignal, Signal, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 import { Topbar } from '../topbar/topbar';
 import { Omnibar } from '../omnibar/omnibar';
 import { CardRealState } from '../card-real-state/card-real-state';
+import { Router } from '@angular/router';
 
 interface RealState {
   id: number;
@@ -13,7 +14,6 @@ interface RealState {
   bathrooms: number;
   hasParking: boolean;
   price: number;
-  pictures: string[];
 }
 
 interface Filters {
@@ -32,6 +32,8 @@ interface Filters {
   templateUrl: './page-dashboard.html',
 })
 export class PageDashboard implements OnInit {
+  router = inject(Router);
+
   realStates: WritableSignal<RealState[]> = signal([]);
   realStatesProcessed: Signal<RealState[]> = computed(() =>
     this.realStates().filter((realState) => {
