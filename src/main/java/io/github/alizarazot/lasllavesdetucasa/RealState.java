@@ -22,13 +22,10 @@ public class RealState {
   private boolean hasParking;
   private String address;
 
-  private String picture; // your lone, majestic picture
+  private String picture;
 
   public RealState() {
-    // JPA's forced participation trophy constructor.
   }
-
-  // ===== GETTERS =====
 
   public Long getId() {
     return id;
