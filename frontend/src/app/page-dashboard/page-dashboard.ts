@@ -27,11 +27,6 @@ interface Filters {
   hasParking: boolean;
 }
 
-interface Message {
-  isGenerated: boolean;
-  content: string;
-}
-
 @Component({
   selector: 'app-page-dashboard',
   imports: [ReactiveFormsModule, Topbar, Omnibar, CardRealState, Button, FormsModule],
@@ -88,6 +83,9 @@ export class PageDashboard implements OnInit {
   hasParkingSignal = toSignal(this.hasParking.valueChanges);
 
   async ngOnInit() {
+    // DEBUG: Delete later.
+    console.log('Alter text fn:', this);
+
     const query = await fetch(window.location.origin + '/real-states');
     this.realStates.set(await query.json());
   }
@@ -134,5 +132,44 @@ export class PageDashboard implements OnInit {
     const responses: string[] = await query.json();
 
     this.messages.set(responses);
+  }
+
+  isAccesibilityOpen = signal(false);
+
+  changePageZoom(delta: number) {
+    if (delta === 0) {
+      document.body.style.zoom = '1';
+      return;
+    }
+    const currentZoom = document.body.style.zoom ? parseFloat(document.body.style.zoom) : 1;
+    const newZoom = currentZoom + delta;
+    document.body.style.zoom = newZoom.toString();
+  }
+
+  togglePageTextBold() {
+    const currentWeight = document.body.style.fontWeight;
+    document.body.style.fontWeight = currentWeight === 'bolder' ? 'normal' : 'bolder';
+  }
+
+  togglePageTextContrast() {
+    let overlay = document.getElementById('before-body') as HTMLElement;
+
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.id = 'before-body';
+
+      Object.assign(overlay.style, {
+        position: 'fixed', // fixed > absolute for overlays
+        inset: '0',
+        zIndex: '9999',
+        pointerEvents: 'none',
+        backdropFilter: 'contrast(100%)',
+      });
+
+      document.body.appendChild(overlay);
+    }
+
+    overlay.style.backdropFilter =
+      overlay.style.backdropFilter === 'contrast(200%)' ? 'contrast(100%)' : 'contrast(200%)';
   }
 }

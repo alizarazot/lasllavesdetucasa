@@ -116,6 +116,49 @@
     </div>
   }
 
+  <!-- Accesibility bubble assistant (zoom level & bold text). -->
+  @if (!isAccesibilityOpen()) {
+    <div
+      class="rounded-full fixed left-2 top-1/2 bg-dark-grey-blue p-3 border-3 border-green-white-2 cursor-pointer"
+      (click)="isAccesibilityOpen.set(!isAccesibilityOpen())"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="size-10" viewBox="0 0 512 512">
+        <path
+          fill="#eaebe6"
+          d="M448 112c-66.82 17.92-119.55 32-192 32s-125.18-14.08-192-32l-16 51c48 20.53 96.71 35.16 147.2 53.2L144 496l56.4 16L246 336h20l45.6 176 56.4-16-51.2-279.8C367.26 199.93 416 183.53 464 164zM256 112a56 56 0 1156-56 56.06 56.06 0 01-56 56z"
+        />
+      </svg>
+    </div>
+  } @else {
+    <div
+      class="font-serif flex border-3 border-green-white-2 flex-col p-3 fixed w-100 top-25 left-3 bg-green-white rounded-2xl"
+    >
+      <header class="flex items-center">
+        <h2 class="grow">Accessibility Options</h2>
+        <svg
+          (click)="isAccesibilityOpen.set(!isAccesibilityOpen())"
+          xmlns="http://www.w3.org/2000/svg"
+          class="cursor-pointer size-5"
+          viewBox="0 0 512 512"
+        >
+          <path
+            d="M400 145.49L366.51 112 256 222.51 145.49 112 112 145.49 222.51 256 112 366.51 145.49 400 256 289.49 366.51 400 400 366.51 289.49 256 400 145.49z"
+          />
+        </svg>
+      </header>
+      <div class="flex flex-col gap-2 py-2">
+        <div class="flex gap-2 items-center">
+          <span class="grow">Change page zoom</span>
+          <app-button text="Reset" (atClick)="changePageZoom(0)" />
+          <app-button text="A+" (atClick)="changePageZoom(0.1)" />
+          <app-button text="A-" (atClick)="changePageZoom(-0.1)" />
+        </div>
+        <app-button text="Toggle bold font" (atClick)="togglePageTextBold()" />
+        <app-button text="Toggle high contrast" (atClick)="togglePageTextContrast()" />
+      </div>
+    </div>
+  }
+
   <app-omnibar
     (makeFilters)="processFilters($event)"
     [bedroomMax]="bedroomMax.value!"
