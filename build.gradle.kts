@@ -40,7 +40,7 @@ repositories { mavenCentral() }
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("com.google.genai:google-genai:1.30.0")
+    implementation("com.google.genai:google-genai:1.31.0")
     implementation("org.postgresql:postgresql")
     implementation("jakarta.persistence:jakarta.persistence-api:3.1.0")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")

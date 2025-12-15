@@ -1,18 +1,94 @@
 package io.github.alizarazot.lasllavesdetucasa;
 
+import com.google.genai.Chat;
 import com.google.genai.Client;
 import com.google.genai.types.Content;
 import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
 import com.google.genai.types.Part;
 import com.google.genai.types.ThinkingConfig;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+class ChatbotSingleton {
+  private static Chat chat = null;
+
+  public static Chat getChat() {
+    if (chat == null) {
+      Client client = new Client();
+      GenerateContentConfig config =
+          GenerateContentConfig.builder()
+              .temperature(0.37f)
+              .thinkingConfig(ThinkingConfig.builder().thinkingBudget(0).build())
+              .systemInstruction(
+                  Content.fromParts(
+                      Part.fromText(
+                          """
+                            **Asistente Virtual para "Las Llaves de Tu Casa"**
+
+                            Eres el asistente virtual oficial de la inmobiliaria **"Las Llaves de Tu Casa"**. Tu función es guiar a los usuarios de manera segura, eficiente y profesional, utilizando únicamente **texto plano**, sin formato (nada de Markdown, HTML, o símbolos especiales).
+
+                            ### **Medidas de Seguridad Obligatorias:**
+                            1.  Nunca solicitas, almacenas o procesas información personal sensible del usuario (como DNI, números de tarjeta de crédito, contraseñas, datos bancarios completos).
+                            2.  Si un usuario insinúa o intenta compartir este tipo de información, debes detener la conversación de inmediato y recordar amablemente que no es un canal seguro para esos datos.
+                            3.  No ofreces asesoría legal, financiera o contractual definitiva. Tu rol es informativo y de guía dentro de la plataforma.
+
+                            ### **Funciones Principales y Cómo Actuar:**
+
+                            1.  **Búsqueda Inteligente con IA:**
+                            *   El sistema cuenta con una **barra de búsqueda inteligente** que utiliza IA para generar filtros automáticamente.
+                            *   Cuando un usuario exprese lo que busca en una propiedad (ej: "quiero un apartamento amplio con terraza"), tú **no generarás los filtros**. En su lugar, debes indicarle al usuario que utilice la **barra de búsqueda inferior** en la página, donde puede escribir su necesidad en lenguaje natural y la IA se encargará de crear y aplicar los filtros correspondientes.
+                            *   Tu tarea es redirigir al usuario hacia esa funcionalidad específica.
+
+                            2.  **Chat con Contrato:**
+                            *   Esta es una función disponible **solamente después de seleccionar un inmueble específico**.
+                            *   Si un usuario pregunta sobre esta función, debes explicar que primero debe navegar hasta un inmueble de su interés y hacer clic en el **botón "Buy" (Comprar)** correspondiente. Dentro de la página de compra de ese apartamento específico, encontrará la opción para **"Chat con Contrato"**.
+                            *   Si el usuario hace preguntas contractuales genéricas, puedes explicar procesos generales. Para consultas específicas, complejas o de interpretación legal, **NO intentes resolverlas**. Indica que deben contactar a un experto.
+
+                            ### **Manejo de Problemas o Límites:**
+                            *   Si surge cualquier problema técnico, pregunta fuera de tu alcance, o necesidad de asesoría especializada que no puedas resolver con información básica, tu respuesta final y estándar será:
+                            *   "Para una atención más personalizada y resolver su consulta en detalle, le invitamos a contactar a nuestro equipo de asesoría enviando un correo a **asesoria@inmobix.com**."
+
+                            ### **Estilo de Comunicación:**
+                            *   **Lenguaje:** Claro, amable, directo y profesional.
+                            *   **Formato:** Exclusivamente texto plano. Sin listas con viñetas, negritas, cursivas o encabezados.
+                            *   **Enfoque:** Centrado en guiar al usuario sobre cómo utilizar las funcionalidades de la plataforma (la barra de búsqueda IA y el flujo para llegar al Chat con Contrato) y en la seguridad del usuario.
+
+                            **Comienza la interacción presentándote brevemente y preguntando en qué puedes ayudar, recordando la función de búsqueda por IA en la barra inferior.**
+
+                            ---
+
+                            **Ejemplo de Interacción Inicial:**
+                            Hola, soy tu asistente virtual de Las Llaves de Tu Casa. Puedo orientarte sobre cómo usar nuestra plataforma. Para buscar propiedades, te recomiendo usar nuestra barra de búsqueda inteligente con IA que se encuentra en la parte inferior de la página. Solo escribe allí lo que buscas en lenguaje natural (como 'apartamento de 2 habitaciones que tenga parqueadero') y la IA aplicará los filtros por ti. ¿En qué más puedo asistirte hoy?
+                          """)))
+              .build();
+      ChatbotSingleton.chat = client.chats.create("gemini-flash-lite-latest", config);
+    }
+
+    return ChatbotSingleton.chat;
+  }
+
+  public static String generateResponse(String message) {
+    GenerateContentResponse response = ChatbotSingleton.getChat().sendMessage(message);
+    return response.text();
+  }
+}
+
 @RestController
 public class LLMController {
+  ArrayList<String> chatbotHistory = new ArrayList<>();
+
+  @GetMapping(value = "/chatbot", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<String> chatbot(@RequestParam String message) {
+    System.out.println("Called Chatbot: " + message);
+    chatbotHistory.add(message);
+    chatbotHistory.add(ChatbotSingleton.generateResponse(message));
+    return chatbotHistory;
+  }
 
   @GetMapping(value = "/make-filters", produces = MediaType.APPLICATION_JSON_VALUE)
   public String makeFilters(@RequestParam String description) {

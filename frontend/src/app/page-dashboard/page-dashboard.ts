@@ -1,11 +1,12 @@
 import { Component, computed, OnInit, signal, WritableSignal, Signal, inject } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 import { Topbar } from '../topbar/topbar';
 import { Omnibar } from '../omnibar/omnibar';
 import { CardRealState } from '../card-real-state/card-real-state';
 import { Router } from '@angular/router';
+import { Button } from '../button/button';
 
 interface RealState {
   id: number;
@@ -26,9 +27,14 @@ interface Filters {
   hasParking: boolean;
 }
 
+interface Message {
+  isGenerated: boolean;
+  content: string;
+}
+
 @Component({
   selector: 'app-page-dashboard',
-  imports: [ReactiveFormsModule, Topbar, Omnibar, CardRealState],
+  imports: [ReactiveFormsModule, Topbar, Omnibar, CardRealState, Button, FormsModule],
   templateUrl: './page-dashboard.html',
 })
 export class PageDashboard implements OnInit {
@@ -110,5 +116,23 @@ export class PageDashboard implements OnInit {
     this.hasParking.setValue(filters.hasParking);
 
     console.log('Filtered!');
+  }
+
+  isChatbotOpen = signal(false);
+  messages = signal<string[]>([]);
+  messageInput = signal<string>('');
+
+  async sendMessageToChatbot() {
+    const msg = this.messageInput();
+    this.messageInput.set('');
+    this.messages.update((msgs) => [...msgs, msg, 'Waiting for response...']);
+
+    const query = await fetch(
+      window.location.origin + '/chatbot?' + new URLSearchParams({ message: msg }).toString(),
+    );
+
+    const responses: string[] = await query.json();
+
+    this.messages.set(responses);
   }
 }
