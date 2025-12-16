@@ -78,9 +78,84 @@ class ChatbotSingleton {
   }
 }
 
+class ContractChatbotSingleton {
+  private static Chat chat = null;
+
+  public static Chat getChat() {
+    System.out.println(
+        "Creating new Contract Chatbot instance"
+            + ContractChatbotSingleton.class.getResource("/static/contract.pdf").toString());
+
+    if (chat == null) {
+      Client client = new Client();
+      GenerateContentConfig config =
+          GenerateContentConfig.builder()
+              .temperature(0.37f)
+              .thinkingConfig(ThinkingConfig.builder().thinkingBudget(0).build())
+              .systemInstruction(
+                  Content.fromParts(
+                      Part.fromText(
+"""
+Eres un asistente especializado en explicar contratos de forma clara y sencilla. Tu misión es ayudar a las personas a entender lo que firman, usando lenguaje cotidiano y evitando términos legales complicados.
+
+Sigue estas reglas al pie de la letra:
+
+1.  **Lenguaje simple**: Explica todo como si se lo contaras a un amigo. Nunca uses jerga legal (como "indemnización", "cláusula penal", "fuerza mayor") sin aclararla en palabras simples.
+2.  **Respuestas breves**: Da respuestas concisas y directas. Solo ofrece detalles extensos si el usuario te lo pide expresamente.
+3.  **Puntos clave al inicio**: Si el usuario te presenta un contrato pero no te pide algo concreto (como "explícame esta parte"), siempre empieza tu respuesta destacando los **3 puntos más importantes** que no son obvios a simple vista. Estos deben ser aspectos que normalmente pasan desapercibidos o que podrían tener consecuencias significativas.
+4.  **Formato**: Responde siempre en texto plano, sin marcado, negritas, viñetas o cualquier formato. Usa frases cortas y separadas por puntos.
+5.  **Neutralidad y confidencialidad**: El contrato que analizas contiene datos de ejemplo (como nombres, empresas, cantidades o fechas). Nunca asumas que estos datos pertenecen al usuario. Tu análisis se basa únicamente en el texto proporcionado. No solicitas ni almacenas información personal.
+6.  **Enfoque práctico**: Centrate en lo que afecta al usuario directamente: plazos, obligaciones, multas, renovaciones automáticas, derechos que cede, etc.
+
+Ejemplo de cómo actuar:
+- Si el usuario dice: "Aquí tienes mi contrato", tú respondes primero con los 3 puntos clave basados en el texto y luego preguntas si necesita aclarar algo. Usarás frases como "Según el texto del contrato..." o "El documento menciona que...".
+- Si el usuario pregunta: "¿Puedo cancelar esto cuando quiera?", le explicas en una o dos frases las condiciones de cancelación que encuentras en el texto proporcionado.
+
+Valores como números, fechas o nombres en el contrato son solo ejemplos. No asumas que pertenecen al usuario. Tu análisis se basa únicamente en el texto del contrato que te proporcionan. Por lo tanto, nunca des estos valores en tus respuestas.
+
+Si el usuario solo saluda o hace preguntas muy generales, muéstrale los 3 puntos clave del contrato que tienes y ofrécele ayuda para entender cualquier parte específica.
+
+Tu tono es amable, paciente y siempre útil.
+""")))
+              .build();
+
+      ContractChatbotSingleton.chat = client.chats.create("gemini-flash-lite-latest", config);
+
+      byte[] contractBytes;
+      try {
+        System.out.println(
+            "Loading contract from path: "
+                + ContractChatbotSingleton.class.getResource("/static/contract.pdf").toString());
+        contractBytes =
+            ContractChatbotSingleton.class
+                .getResourceAsStream("/static/contract.pdf")
+                .readAllBytes();
+      } catch (Exception e) {
+        System.out.println("Error loading contract: " + e.getMessage());
+        return ContractChatbotSingleton.chat;
+      }
+
+      ContractChatbotSingleton.chat.sendMessage(
+          Content.fromParts(
+              Part.fromText(
+                  "Aquí tienes el contrato, prepárate para responder en el siguiente turno de"
+                      + " acuerdo a tus instrucciones:"),
+              Part.fromBytes(contractBytes, "application/pdf")));
+    }
+
+    return ContractChatbotSingleton.chat;
+  }
+
+  public static String generateResponse(String message) {
+    GenerateContentResponse response = ContractChatbotSingleton.getChat().sendMessage(message);
+    return response.text();
+  }
+}
+
 @RestController
 public class LLMController {
   ArrayList<String> chatbotHistory = new ArrayList<>();
+  ArrayList<String> contractChatbotHistory = new ArrayList<>();
 
   @GetMapping(value = "/chatbot", produces = MediaType.APPLICATION_JSON_VALUE)
   public List<String> chatbot(@RequestParam String message) {
@@ -88,6 +163,14 @@ public class LLMController {
     chatbotHistory.add(message);
     chatbotHistory.add(ChatbotSingleton.generateResponse(message));
     return chatbotHistory;
+  }
+
+  @GetMapping(value = "/contract-chatbot", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<String> contractChatbot(@RequestParam String message) {
+    System.out.println("Called Contract Chatbot: " + message);
+    contractChatbotHistory.add(message);
+    contractChatbotHistory.add(ContractChatbotSingleton.generateResponse(message));
+    return contractChatbotHistory;
   }
 
   @GetMapping(value = "/make-filters", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -54,10 +54,7 @@ export class PageBuy implements OnInit {
   }
 
   navigateContractSummary() {
-    window.open(
-      this.router.serializeUrl(this.router.createUrlTree(['/contract-summary'])),
-      '_blank',
-    );
+    this.router.navigate(['/contract-summary']);
   }
 
   currentDate = new Date().toISOString().split('T')[0];
