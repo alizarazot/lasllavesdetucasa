@@ -13,8 +13,11 @@ export class PageContractSummary implements OnInit {
 
   messageInput = signal<string>('');
 
-  ngOnInit() {
-    this.addMessage('Hola, ¿qué me puedes decir acerca de este contrato?');
+  async ngOnInit() {
+    await this.addMessage('');
+    if (this.chatHistory().length === 0) {
+      this.addMessage('Hola, ¿qué me puedes decir acerca de este contrato?');
+    }
   }
 
   async processAddMessage() {

@@ -167,6 +167,10 @@ public class LLMController {
 
   @GetMapping(value = "/contract-chatbot", produces = MediaType.APPLICATION_JSON_VALUE)
   public List<String> contractChatbot(@RequestParam String message) {
+    if (message.length() == 0) {
+      return contractChatbotHistory;
+    }
+
     System.out.println("Called Contract Chatbot: " + message);
     contractChatbotHistory.add(message);
     contractChatbotHistory.add(ContractChatbotSingleton.generateResponse(message));
