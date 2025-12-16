@@ -1,7 +1,7 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <div class="min-h-dvh bg-green-white-2">
-  <app-topbar class="sticky top-0" (filtersClick)="toggleFilters()" />
+  <app-topbar class="sticky top-0" [showBackToHome]="false" (filtersClick)="toggleFilters()" />
 
   <div class="grid grid-cols-3 content-stretch gap-10 p-10">
     @for (realState of realStatesProcessed(); track realState.id) {

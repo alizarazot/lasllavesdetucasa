@@ -1,5 +1,5 @@
-import { Component, OnInit, signal } from '@angular/core';
-
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { Location } from '@angular/common';
 import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
 
 import { app } from '../firebase';
@@ -42,5 +42,11 @@ export class PageLogin implements OnInit {
 
   async doLogOut() {
     getAuth().signOut();
+  }
+
+  location = inject(Location);
+
+  goBack() {
+    this.location.back();
   }
 }
